@@ -1,0 +1,9 @@
+Manifest
+Java
+Recursos
+
+Desde Manifest se llama a los recursos como
+	@/recurso/atributo
+Desde java se llama a los recusos cono 
+   R.   Ej: R.string. ...
+
