@@ -4,15 +4,37 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+
+import java.lang.reflect.Array;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private Button[] NumberArr;
+    private Button btnPunto,btnMasMenos;
+    private Button btnMas,btnMenos,btnPor,btnDiv,btnIgual;
+
+    private Array of Button
+
+    public MainActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btn0 = (Button) findViewById(R.id.btn0);
+
+
+
+
     }
+
+
+
 
 
     @Override
