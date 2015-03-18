@@ -23,7 +23,7 @@ public class ActivityA extends ActionBarActivity {
         setContentView(R.layout.activity_a);
         Log.d("CHANGE", "ActivityA onCreate()");
 
-        if (saveInstanceState != null) {
+        if (savedInstanceState != null) {
             String data = savedInstanceState.getString(DATA);
             this.op = savedInstanceState.getString("op");
             this.result = savedInstanceState.getDouble("result");
