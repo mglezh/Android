@@ -10,3 +10,7 @@ Desde Manifest se llama a los recursos como
 Desde java se llama a los recusos cono 
    R.   Ej: R.string. ...
 
+Documentación de Android
+	developers.android.com
+
+El this en java se refiere a la instancia en la que estés 

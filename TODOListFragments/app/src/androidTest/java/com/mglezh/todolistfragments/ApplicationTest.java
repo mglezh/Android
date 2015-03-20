@@ -1,4 +1,4 @@
-package com.mglezh.calculator;
+package com.mglezh.todolistfragments;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
