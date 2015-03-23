@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.mglezh.todolistfragments.fragment.InputFragment"
-        android:id="@+id/inputFragment" />
+        android:id="@+id/inputFragment"
+        tools:layout="@layout/fragment_input" />
 
     <fragment
         android:layout_width="match_parent"

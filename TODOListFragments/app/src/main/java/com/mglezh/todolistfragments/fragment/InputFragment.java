@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mglezh.todolistfragments.R;
+import com.mglezh.todolistfragments.model.ToDo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,16 +21,17 @@ import com.mglezh.todolistfragments.R;
  * Use the {@link InputFragment#newInstance} factory method to
  * create an instance of this com.mglezh.todolistfragments.fragment.
  */
+
 public class InputFragment extends Fragment {
 
     public interface TODOItemListener {
-        public void addTodo(String todo);
+        public void addTodo(ToDo todo);
     }
 
     private Button btnAdd;
     private EditText todoText;
 
-    private TODOItemListener
+    private TODOItemListener target;
 
     @Override
     public void onAttach(Activity activity) {
@@ -38,7 +40,7 @@ public class InputFragment extends Fragment {
             this.target = (TODOItemListener) activity;
         }
         catch (ClassCastException ex){
-            throw new ClassCastException(activity.toString() + "must implement TODOItemListener ")
+            throw new ClassCastException(activity.toString() + "must implement TODOItemListener interface");
         };
     }
 
@@ -60,7 +62,10 @@ public class InputFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String todo = todoText.getText().toString();
+                ToDo todo = new ToDo(todoText.getText().toString());
+                todoText.setText("");
+
+                target.addTodo(todo);
             }
         });
     }
