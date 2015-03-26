@@ -21,7 +21,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
     private int resource;
 
     public EarthQuakeAdapter(Context context, int resource, List<EarthQuake> objects) {
-        super(context, resource);
+        super(context, resource, objects);
 
         this.resource = resource;
     }
@@ -44,10 +44,17 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
 
         EarthQuake item = getItem(position);
 
-        TextView lblMagnitude = (TextView) layout.findViewById(R.id.textPlace);
+        TextView lblMagnitude = (TextView) layout.findViewById(R.id.textMagnitude);
         TextView lblPlace = (TextView) layout.findViewById(R.id.textPlace);
-        TextView lblTime = (TextView) layout.findViewById(R.id.textPlace);
+        TextView lblTime = (TextView) layout.findViewById(R.id.textTime);
+
+        lblMagnitude.setText(Double.toString(item.getMagnitude()));
+        lblPlace.setText(item.getPlace());
+        lblTime.setText(item.getTime().toString());
 
         return layout;
+
+
     }
+
 }

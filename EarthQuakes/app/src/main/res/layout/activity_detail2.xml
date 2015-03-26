@@ -9,35 +9,35 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textPlace"
-        android:layout_gravity="center_horizontal"
-        android:text="Place"
+        android:id="@+id/textMagnitude"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/space"
-        android:layout_alignBottom="@+id/space" />
+        android:layout_alignParentStart="true"
+        android:text="Magnitude" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place"
+        android:id="@+id/textPlace"
+        android:layout_below="@+id/textMagnitude"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
         android:id="@+id/textTime"
-        android:layout_below="@+id/textMagnitude"
+        android:layout_below="@+id/textPlace"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textMagnitude"
-        android:layout_weight="0.11"
-        android:text="Magnitude"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <Space
-        android:layout_width="20px"
-        android:layout_height="20px"
-        android:layout_toEndOf="@+id/textMagnitude"
-        android:layout_alignBottom="@+id/textMagnitude"
-        android:layout_alignTop="@+id/textMagnitude"
-        android:id="@+id/space" />
+        android:text="Coordinates"
+        android:id="@+id/textCoords"
+        android:layout_below="@+id/textTime"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textTime" />
 </RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/earthquakes_refresh">
+        <SwitchPreference
+            android:key="@string/AUTO_REFRESH"
+            android:title="@string/auto_refresh_title"
+            android:summary="@string/auto_refresh_description"
+            android:defaultValue="true">
+        </SwitchPreference>
+        <ListPreference
+            android:key="@string/INTERVAL_LIST"
+            android:title="@string/interval_list"
+            android:summary="@string/interval_list_sumary"
+            android:entries="@array/Frequence_options"
+            android:entryValues="@array/Frequence_values"
+            android:defaultValue="1">
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/earthquakes_filter">
+        <ListPreference
+            android:key="@string/MAGNITUDE_LIST"
+            android:title="@string/magnitude_list"
+            android:summary="@string/magnitude_list_sumary"
+            android:entries="@array/Magnitude_options"
+            android:entryValues="@array/Magnitude_values"
+            android:defaultValue="1">
+        </ListPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

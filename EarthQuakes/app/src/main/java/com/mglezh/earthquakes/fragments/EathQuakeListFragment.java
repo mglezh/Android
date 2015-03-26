@@ -1,6 +1,7 @@
 package com.mglezh.earthquakes.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
@@ -9,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.mglezh.earthquakes.DetailActivity;
+import com.mglezh.earthquakes.MainActivity;
 import com.mglezh.earthquakes.R;
 
 import com.mglezh.earthquakes.adapters.EarthQuakeAdapter;
@@ -46,21 +50,41 @@ public class EathQuakeListFragment extends ListFragment implements DownloadEarth
     private ArrayList<EarthQuake> EarthQuakes;
     private EarthQuakeAdapter aa;
 
+    private final String EarthQuakes_KEY = "EarthQuakes_KEY";
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        EarthQuakes = new ArrayList<>();
 
         DownloadEarthquakesTask task = new DownloadEarthquakesTask(this);
         task.execute(getString(R.string.earthquakes_url));
     }
 
+    private void addEventListener(){
+
+
+    }
+
+    // Es un procedimiento de ListFragment que se activa al seleccinar un elemento de la listaS
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        EarthQuake earthQuake = EarthQuakes.get(position);
+
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(EarthQuakes_KEY, earthQuake.get_id());
+        startActivity(intent);
+   }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
-        aa = new EarthQuakeAdapter(getActivity(), android.R.layout.simple_list_item_1, EarthQuakes);
+        EarthQuakes = new ArrayList<>();
+
+        aa = new EarthQuakeAdapter(getActivity(), R.layout.activity_detail, EarthQuakes);
         setListAdapter(aa);
 
         return layout;
@@ -70,6 +94,14 @@ public class EathQuakeListFragment extends ListFragment implements DownloadEarth
     public void addEarthQuake(EarthQuake earthquake) {
         EarthQuakes.add(0, earthquake);
         aa.notifyDataSetChanged();
+
     }
 
- }
+    @Override
+    public void notifyTotal(Integer Total) {
+        String msg = getString(R.string.num_earth_Quakes, Total);
+        Toast t = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+}

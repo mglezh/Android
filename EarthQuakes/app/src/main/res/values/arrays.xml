@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Magnitude_options">
+        <item>filter 1:</item>
+        <item>filter 2:</item>
+        <item>filter 3:</item>
+        <item>filter 4:</item>
+    </string-array>
+    <string-array name="Magnitude_values">
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>todos</item>
+    </string-array>
+    <string-array name="Frequence_options">
+        <item>5 minutos</item>
+        <item>10 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+    </string-array>
+    <string-array name="Frequence_values">
+        <item>5</item>
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+    </string-array>
+</resources>

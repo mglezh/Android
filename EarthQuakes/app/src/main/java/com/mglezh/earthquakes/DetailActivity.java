@@ -1,27 +1,34 @@
 package com.mglezh.earthquakes;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
+public class DetailActivity extends ActionBarActivity {
 
-    static final int PREFS_ACTIVITY = 1;
+    private TextView lblMagnitude;
+    private TextView lblPlace;
+    private TextView lblTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail2);
+
+        lblMagnitude = (TextView) findViewById(R.id.textMagnitude);
+        lblPlace = (TextView) findViewById(R.id.textPlace);
+        lblTime = (TextView) findViewById(R.id.textTime);
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
         return true;
     }
 
@@ -34,19 +41,9 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent prefIntent = new Intent(this, SettingActivity.class);
-            startActivityForResult(prefIntent, PREFS_ACTIVITY);
-
-
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
     }
 }
