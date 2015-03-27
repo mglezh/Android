@@ -1,6 +1,7 @@
 package com.mglezh.earthquakes.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LinearLayout layout;
         if (convertView == null) {
             layout = new LinearLayout(getContext());
@@ -48,7 +50,10 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         TextView lblPlace = (TextView) layout.findViewById(R.id.textPlace);
         TextView lblTime = (TextView) layout.findViewById(R.id.textTime);
 
+        double mag = item.getMagnitude();
+
         lblMagnitude.setText(Double.toString(item.getMagnitude()));
+        lblMagnitude.setBackgroundColor(Color.rgb(0xFF,((int) item.getMagnitude() * 40),0xFF));
         lblPlace.setText(item.getPlace());
         lblTime.setText(item.getTime().toString());
 

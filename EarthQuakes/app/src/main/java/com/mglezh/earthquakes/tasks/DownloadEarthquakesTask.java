@@ -1,9 +1,11 @@
 package com.mglezh.earthquakes.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.mglezh.earthquakes.R;
+import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.model.Coordinate;
 import com.mglezh.earthquakes.model.EarthQuake;
 
@@ -24,8 +26,11 @@ import java.net.URLConnection;
  */
 public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integer>  {
 
+    private EarthQuakesDB earthQuakeDB;
+
     public interface AddEarthQuakeInterface {
-        public void addEarthQuake(EarthQuake earthquake);
+        //No hace falta si tenemos base de datos
+        //public void addEarthQuake(EarthQuake earthquake);
         public void notifyTotal(Integer Total);
     }
 
@@ -34,8 +39,11 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
 
     private AddEarthQuakeInterface target;
 
-    public DownloadEarthquakesTask(AddEarthQuakeInterface target) {
+    public DownloadEarthquakesTask(Context context, AddEarthQuakeInterface target) {
         this.target = target;
+
+        this.earthQuakeDB = new EarthQuakesDB(context);
+
     }
 
     @Override
@@ -51,9 +59,12 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-        target.addEarthQuake(earthQuakes[0]);
-        //
-    }
+
+
+        // OJO actualizar la base de datos
+
+        //target.addEarthQuake(earthQuakes[0]);
+     }
 
     @Override
     protected void onPostExecute(Integer integer) {

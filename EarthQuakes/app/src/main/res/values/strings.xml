@@ -19,10 +19,13 @@
 
     <string name="INTERVAL_LIST">interval_update_list</string>
     <string name="interval_list">Interval</string>
+    <string name="interval_list_sumary">Select interval</string>
 
     <string name="MAGNITUDE_LIST">magnitude_list</string>
     <string name="magnitude_list">Magnitude</string>
-    <string name="magnitude_list_sumary">Select magnitude</string>
-    <string name="interval_list_sumary">Select interval</string>
+    <string name="magnitude_list_sumary">Select minimun magnitude</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

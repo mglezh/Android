@@ -1,13 +1,18 @@
-package com.mglezh.earthquakes;
+package com.mglezh.earthquakes.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.mglezh.earthquakes.R;
+import com.mglezh.earthquakes.fragments.EathQuakeListFragment;
+import com.mglezh.earthquakes.tasks.DownloadEarthquakesTask;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements DownloadEarthquakesTask.AddEarthQuakeInterface {
 
     static final int PREFS_ACTIVITY = 1;
 
@@ -15,6 +20,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        downLoadEartQuakes();
     }
 
 
@@ -49,4 +56,24 @@ public class MainActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
     }
+
+    @Override
+    public void notifyTotal(Integer Total) {
+        String msg = getString(R.string.num_earth_Quakes, Total);
+        Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Para que se actualiza la lista cuando se vuelva a esta activity ya creada
+        downLoadEartQuakes();
+    }
+
+    private void downLoadEartQuakes(){
+        DownloadEarthquakesTask task = new DownloadEarthquakesTask(this, this);
+        task.execute(getString(R.string.earthquakes_url));
+    }
+
 }
