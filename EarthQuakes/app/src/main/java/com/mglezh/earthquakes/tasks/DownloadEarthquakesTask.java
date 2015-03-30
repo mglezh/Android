@@ -1,7 +1,11 @@
 package com.mglezh.earthquakes.tasks;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.mglezh.earthquakes.R;
@@ -26,12 +30,12 @@ import java.net.URLConnection;
  */
 public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integer>  {
 
+    private SharedPreferences prefs;
+
     private EarthQuakesDB earthQuakeDB;
 
     public interface AddEarthQuakeInterface {
-        //No hace falta si tenemos base de datos
-        //public void addEarthQuake(EarthQuake earthquake);
-        public void notifyTotal(Integer Total);
+        public void notifyTotal(Integer Total, Cursor cursor);
     }
 
     private JSONObject json;
@@ -44,6 +48,7 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
 
         this.earthQuakeDB = new EarthQuakesDB(context);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Override
@@ -59,17 +64,19 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     @Override
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
-
-
-        // OJO actualizar la base de datos
-
-        //target.addEarthQuake(earthQuakes[0]);
+        // Inserta en la base de datos
+        earthQuakeDB.putEarthQuake(earthQuakes[0]);
      }
 
     @Override
     protected void onPostExecute(Integer integer) {
         super.onPostExecute(integer);
-        target.notifyTotal(integer);
+
+        double minMagnitude = Double.parseDouble(prefs.getString("magnitude_list", "0"));
+
+        Cursor cursor = earthQuakeDB.getEarthQuakeFiltersByMagnitude(minMagnitude);
+
+        target.notifyTotal(integer, cursor);
     }
 
     private Integer updateEarthQuakes(String earthquakesfeed){

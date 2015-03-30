@@ -53,7 +53,7 @@ public class EarthQuakeAdapter extends ArrayAdapter<EarthQuake> {
         double mag = item.getMagnitude();
 
         lblMagnitude.setText(Double.toString(item.getMagnitude()));
-        lblMagnitude.setBackgroundColor(Color.rgb(0xFF,((int) item.getMagnitude() * 40),0xFF));
+        lblMagnitude.setBackgroundColor(Color.rgb(0xFF,((int) (item.getMagnitude() * 10)),0xFF));
         lblPlace.setText(item.getPlace());
         lblTime.setText(item.getTime().toString());
 
