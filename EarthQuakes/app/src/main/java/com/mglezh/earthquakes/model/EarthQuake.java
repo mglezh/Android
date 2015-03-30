@@ -8,17 +8,16 @@ import java.util.Date;
 public class EarthQuake {
     private String _id;
     private String place;
-    private Date date;
     private Coordinate coords;
     private double magnitude;
     private Date time;
 
     private String url;
 
-    public EarthQuake(String _id, String place, Date date, Coordinate coords, double magnitude) {
+    public EarthQuake(String _id, String place, Date time, Coordinate coords, double magnitude) {
         this._id = _id;
         this.place = place;
-        this.date = date;
+        this.time = time;
         this.coords = coords;
         this.magnitude = magnitude;
     }
@@ -38,14 +37,6 @@ public class EarthQuake {
 
     public void set_id(String _id) {
         this._id = _id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Coordinate getCoords() {

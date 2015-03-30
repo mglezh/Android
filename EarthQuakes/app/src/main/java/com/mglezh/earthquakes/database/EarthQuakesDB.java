@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.mglezh.earthquakes.model.EarthQuake;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
+
 /**
  * Created by cursomovil on 27/03/15.
  */
@@ -16,13 +19,13 @@ public class EarthQuakesDB {
     private EarthQuakeOpenHelper helper;
     private SQLiteDatabase db;
 
-    private String id_KEY = "_id";
-    private String place_KEY = "place";
-    private String magnitude_KEY = "magnitude";
-    private String lat_KEY = "lat";
-    private String long_KEY = "long";
-    private String url_KEY = "url";
-    private String time_KEY = "time";
+    public static final String id_KEY = "_id";
+    public static final String place_KEY = "place";
+    public static final String magnitude_KEY = "magnitude";
+    public static final String lat_KEY = "lat";
+    public static final String long_KEY = "long";
+    public static final String url_KEY = "url";
+    public static final String time_KEY = "time";
 
     public EarthQuakesDB(Context context) {
         this.helper = new EarthQuakeOpenHelper(context, EarthQuakeOpenHelper.DATABASE_NAME,
@@ -41,8 +44,14 @@ public class EarthQuakesDB {
         //	SQL	Statement	to	create	a	new	database.
         private	static	final	String	DATABASE_CREATE	=
                 "CREATE TABLE " +
-                DATABASE_TABLE +
-                "(_id TEXT PRIMARY KEY, place TEXT, magnitude REAL, lat REAL, long REAL, url TEXT, time INTEGER)";
+                DATABASE_TABLE  +
+                "(" +
+                id_KEY    + " TEXT PRIMARY KEY, " +
+                place_KEY + " TEXT, magnitude REAL, " +
+                lat_KEY   + " REAL, " +
+                long_KEY  + " REAL, " +
+                url_KEY   + " TEXT, " +
+                time_KEY  + " INTEGER)";
 
         private EarthQuakeOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -75,11 +84,17 @@ public class EarthQuakesDB {
         newValues.put(long_KEY,	        earthQuake.getCoords().getLng());
         newValues.put(url_KEY,	        earthQuake.getUrl());
         newValues.put(time_KEY,	        earthQuake.getTime().getTime());
+        try {
+            db.insert(helper.DATABASE_TABLE, null, newValues);
+        } catch (android.database.SQLException ex){
 
-        db.insert(helper.DATABASE_TABLE, null, newValues);
+        }
+
     }
 
     public Cursor getEarthQuakeFiltersByMagnitude(double magnitude){
+
+        // Los elementos se obtienen mediante una Query que me devuelve un cursor
 
         String[] result_columns	= new String[] {id_KEY, magnitude_KEY, place_KEY, lat_KEY, long_KEY, url_KEY, time_KEY};
 

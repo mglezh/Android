@@ -65,7 +65,7 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     protected void onProgressUpdate(EarthQuake... earthQuakes) {
         super.onProgressUpdate(earthQuakes);
         // Inserta en la base de datos
-        earthQuakeDB.putEarthQuake(earthQuakes[0]);
+
      }
 
     @Override
@@ -136,7 +136,9 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
 
             Log.d(TAG, earthQuake.toString());
 
-            publishProgress(earthQuake);
+            earthQuakeDB.putEarthQuake(earthQuake);
+
+            // publishProgress(earthQuake);
             // Provoca que se llame al onProgressUpdate
 
         } catch (JSONException e) {

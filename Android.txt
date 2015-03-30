@@ -1,4 +1,5 @@
 Android Studio
+	Para filtrar los mensajes de la consola se pone D/Filtro
 
 
 Manifest
@@ -18,8 +19,6 @@ El this en java se refiere a la instancia en la que estés
 Para incorporar métodos @Override Alt+Insert
 
 Intent
-
-
 
 AsynTask
 

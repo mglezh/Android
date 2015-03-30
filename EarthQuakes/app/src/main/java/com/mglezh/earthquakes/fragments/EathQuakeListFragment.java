@@ -37,6 +37,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A fragment representing a list of Items.
@@ -95,8 +96,7 @@ public class EathQuakeListFragment extends ListFragment implements DownloadEarth
     @Override
     public void notifyTotal(Integer Total, Cursor cursor) {
         //Recorrer
-
-
+        HashMap<String, Integer> indexes = new HashMap<>();
 
         int idIndex = cursor.getColumnIndexOrThrow(id_KEY);
         int magnitudeIndex = cursor.getColumnIndexOrThrow(magnitude_KEY);
@@ -107,6 +107,8 @@ public class EathQuakeListFragment extends ListFragment implements DownloadEarth
         int timeIndex = cursor.getColumnIndexOrThrow(time_KEY);
 
         while (cursor.moveToNext())	{
+            // Si no creo un terremoto nuevo cada vez al agregarlos en la lista todos apuntarían al mismo elemento
+            // terremoto porque al adicionar un elemento a una lista lo que se agrega es su dirección
             EarthQuake earthquake = new EarthQuake();
             earthquake.set_id(cursor.getString(idIndex));
             earthquake.setMagnitude(cursor.getDouble(magnitudeIndex));
