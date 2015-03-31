@@ -1,11 +1,8 @@
-package com.mglezh.earthquakes.tasks;
+package com.mglezh.earthquakes.services;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
 import android.util.Log;
 
 import com.mglezh.earthquakes.R;
@@ -25,49 +22,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by cursomovil on 25/03/15.
- */
-public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integer>  {
+public class DownloadEarthQuakesService extends Service {
 
     private EarthQuakesDB earthQuakeDB;
-
-    public interface AddEarthQuakeInterface {
-        public void notifyTotal(Integer Total/*, Cursor cursor*/);
-    }
-
     private JSONObject json;
     private String TAG = "UPDATE_EarthQuake";
 
-    private AddEarthQuakeInterface target;
-
-    public DownloadEarthquakesTask(Context context, AddEarthQuakeInterface target) {
-        this.target = target;
-
-        this.earthQuakeDB = new EarthQuakesDB(context);
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        this.earthQuakeDB = new EarthQuakesDB(this);
     }
 
     @Override
-    protected Integer doInBackground(String... urls) {
-        Integer count = null;
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
 
-        if (urls.length > 0){
-            count = updateEarthQuakes(urls[0]);
-        }
-        return count; // Lo que devuelve aquí va como parámetro Integer al onPostExecute(Integer integer)
+        Thread t = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                updateEarthQuakes(getString(R.string.earthquakes_url));
+            }
+        });
+        t.start();
+
+        return Service.START_STICKY;
     }
-
-    @Override
-    protected void onProgressUpdate(EarthQuake... earthQuakes) {
-        super.onProgressUpdate(earthQuakes);
-        // Inserta en la base de datos
-
-     }
-
-    @Override
-    protected void onPostExecute(Integer integer) {
-        super.onPostExecute(integer);
-     }
 
     private Integer updateEarthQuakes(String earthquakesfeed){
 
@@ -137,4 +117,8 @@ public class DownloadEarthquakesTask extends AsyncTask<String, EarthQuake, Integ
     }
 
 
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 }

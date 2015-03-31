@@ -21,12 +21,18 @@
         <activity
             android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName=".activities.MainActivity" >
         </activity>
         <activity
             android:name=".activities.SettingActivity"
-            android:label="@string/title_activity_setting">
+            android:label="@string/title_activity_setting" >
         </activity>
+
+        <service
+            android:name=".services.DownloadEarthQuakesService"
+            android:enabled="false"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

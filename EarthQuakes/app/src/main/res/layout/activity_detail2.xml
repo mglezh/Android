@@ -7,15 +7,16 @@
     tools:context="com.mglezh.earthquakes.activities.DetailActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textMagnitude"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:text="Magnitude" />
+        android:text="Magnitude"
+        android:textSize="30dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Place"
         android:id="@+id/textPlace"
@@ -24,7 +25,7 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Time"
         android:id="@+id/textTime"
@@ -33,7 +34,7 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Coordinates"
         android:id="@+id/textCoords"

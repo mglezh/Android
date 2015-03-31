@@ -4,7 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="earthquakes_url">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail">EarthQuake Detail</string>
     <string name="title_activity_setting">Settings</string>
 
     <string name="num_earth_Quakes">%d eartquakes processed</string>

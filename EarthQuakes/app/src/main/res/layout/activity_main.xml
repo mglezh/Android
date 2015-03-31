@@ -8,7 +8,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.mglezh.earthquakes.fragments.EathQuakeListFragment"
+        android:name="com.mglezh.earthquakes.fragments.EarthQuakeListFragment"
         android:id="@+id/fragment"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

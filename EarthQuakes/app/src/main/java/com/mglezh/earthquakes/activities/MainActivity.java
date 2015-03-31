@@ -1,27 +1,29 @@
 package com.mglezh.earthquakes.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.mglezh.earthquakes.R;
-import com.mglezh.earthquakes.fragments.EathQuakeListFragment;
-import com.mglezh.earthquakes.tasks.DownloadEarthquakesTask;
+import com.mglezh.earthquakes.services.DownloadEarthQuakesService;
 
 
 public class MainActivity extends ActionBarActivity /*implements DownloadEarthquakesTask.AddEarthQuakeInterface*/ {
 
     static final int PREFS_ACTIVITY = 1;
+    private long alarmWait = AlarmManager.INTERVAL_FIFTEEN_MINUTES;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setRepeatingAlarm(this);
         //downLoadEartQuakes();
     }
 
@@ -56,24 +58,44 @@ public class MainActivity extends ActionBarActivity /*implements DownloadEarthqu
         super.onActivityResult(requestCode, resultCode, data);
 
     }
-/*
-    @Override
-    public void notifyTotal(Integer Total, Cursor cursor) {
-        String msg = getString(R.string.num_earth_Quakes, Total);
-        Toast t = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        t.show();
-    }
-*/
+
     @Override
     public void onResume() {
         super.onResume();
         // Para que se actualiza la lista cuando se vuelva a esta activity ya creada
-        //downLoadEartQuakes();
+        // downLoadEartQuakes();
     }
-/*
+
+
     private void downLoadEartQuakes(){
-        DownloadEarthquakesTask task = new DownloadEarthquakesTask(this, this);
+        /*
+        DownloadEarthquakesTask task = new DownloadEarthquakesTask(getActivity(), this);
         task.execute(getString(R.string.earthquakes_url));
+        */
+        Intent download = new Intent(this, DownloadEarthQuakesService.class);
+        startService(download);
     }
-*/
+
+    private	void setRepeatingAlarm(Context context) {
+
+        //Get	a	reference	to	the	Alarm	Manager
+
+        AlarmManager alarmManager =
+                (AlarmManager)getSystemService(context.ALARM_SERVICE);
+        //Set	the	alarm	to	wake	the	device	if	sleeping.
+        int	alarmType =	AlarmManager.ELAPSED_REALTIME;
+
+        Intent	download	=	new	Intent(this, DownloadEarthQuakesService.class);
+        PendingIntent alarmIntent	=	PendingIntent.getService(this,	0,
+                download,	0);
+
+        //Wake	up	the	device	to	fire	an	alarm	in	half	an	hour,	and	every
+        //half-hour	after	that.
+        alarmManager.setRepeating(alarmType,
+                alarmWait,
+                alarmWait,
+                alarmIntent);
+
+    }
+
 }

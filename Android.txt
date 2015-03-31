@@ -18,11 +18,30 @@ El this en java se refiere a la instancia en la que estés
 
 Para incorporar métodos @Override Alt+Insert
 
+Activity
+
+Fragments
+
 Intent
 
-AsynTask
+BroadCast
 
+AsynTask
 	Para sincronizar los Threat con la interfaz de usuario. Solo se emplean cuando no hay una base de datos por el medio para hacerlo.
 
+	Tiene sentido cuando va a estar sincronizada con la vista.
+
 	doInBackground(String... urls) 
-	los ... indican varios elementos de tipo String
+	los ... indican varios elementos (de tipo String en este caso)
+
+SQLite
+
+Content Provider
+
+Servicios
+	No tienen interfaz
+	Se inician desde otros componentes de la aplicación
+	Ideal para procesos repetitivos
+	Se lanzan con Intent
+
+Alarmas
