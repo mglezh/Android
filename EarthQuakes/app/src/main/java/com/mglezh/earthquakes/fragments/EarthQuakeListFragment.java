@@ -38,8 +38,6 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
     private ArrayList<EarthQuake> EarthQuakes;
     private EarthQuakeAdapter aa;
 
-    private SharedPreferences prefs;
-
     private EarthQuakesDB earthQuakeDB;
 
     private final String EarthQuakes_KEY = "EarthQuakes_KEY";
@@ -49,7 +47,6 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
         super.onCreate(savedInstanceState);
 
         this.earthQuakeDB = new EarthQuakesDB(getActivity());
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
     // Es un procedimiento de ListFragment que se activa al seleccinar un elemento de la listaS
@@ -85,6 +82,8 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
     @Override
     public void onResume() {
         super.onResume();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         double minMagnitude = Double.parseDouble(prefs.getString(getString(R.string.MAGNITUDE_LIST), "0"));
 
