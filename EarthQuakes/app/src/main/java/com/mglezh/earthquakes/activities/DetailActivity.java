@@ -23,6 +23,9 @@ public class DetailActivity extends ActionBarActivity {
 
     private final String EarthQuakes_KEY = "EarthQuakes_KEY";
 
+    static final int PREFS_ACTIVITY = 1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +62,12 @@ public class DetailActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent prefIntent = new Intent(this, SettingActivity.class);
+            startActivityForResult(prefIntent, PREFS_ACTIVITY);
+
             return true;
         }
 

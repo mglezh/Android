@@ -86,7 +86,7 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
     public void onResume() {
         super.onResume();
 
-        double minMagnitude = Double.parseDouble(prefs.getString(getString(R.string.magnitude_list), "0"));
+        double minMagnitude = Double.parseDouble(prefs.getString(getString(R.string.MAGNITUDE_LIST), "0"));
 
         EarthQuakes.clear();
         EarthQuakes.addAll( earthQuakeDB.getAllByMagnitude(minMagnitude));

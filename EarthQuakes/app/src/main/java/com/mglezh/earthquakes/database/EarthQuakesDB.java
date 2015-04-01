@@ -126,7 +126,7 @@ public class EarthQuakesDB {
 
     public List<EarthQuake> getAllByMagnitude(double magnitude){
 
-        String	where	=	magnitude_KEY	+	">=?" ;
+        String	where	=	magnitude_KEY	+	">?" ;
         String	whereArgs[]	=	new String[] {Double.toString(magnitude)}; // Sustituye al ?
         return query(where,whereArgs);
 

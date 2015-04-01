@@ -15,13 +15,13 @@
         <item>5</item>
     </string-array>
     <string-array name="Frequence_options">
-        <item>5 minutos</item>
+        <item>1 minuto</item>
         <item>10 minutos</item>
         <item>30 minutos</item>
         <item>1 hora</item>
     </string-array>
     <string-array name="Frequence_values">
-        <item>5</item>
+        <item>1</item>
         <item>10</item>
         <item>30</item>
         <item>60</item>
