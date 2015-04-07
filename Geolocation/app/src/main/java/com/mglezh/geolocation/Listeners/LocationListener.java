@@ -14,13 +14,11 @@ public class LocationListener implements android.location.LocationListener{
 
     private AddLocationInterface target;
 
-    public android.location.LocationListener(AddLocationInterface target){
-
-    }
+    public LocationListener(AddLocationInterface target) {this.target = target;}
 
     @Override
     public void onLocationChanged(Location location) {
-        location.getLatitude();
+        target.addLocation(location);
     }
 
     @Override
@@ -37,4 +35,7 @@ public class LocationListener implements android.location.LocationListener{
     public void onProviderDisabled(String provider) {
 
     }
+
+
+
 }
