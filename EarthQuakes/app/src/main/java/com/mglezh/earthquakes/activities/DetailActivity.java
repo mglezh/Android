@@ -18,7 +18,7 @@ import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.model.EarthQuake;
 
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends ActionBarActivity {
 
     private TextView lblMagnitude;
     private TextView lblPlace;
@@ -83,33 +83,5 @@ public class DetailActivity extends FragmentActivity {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())));
         mMap.addMarker(new MarkerOptions().position(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())).title(Double.toString(earthQuake.getMagnitude())));
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent prefIntent = new Intent(this, SettingActivity.class);
-            startActivityForResult(prefIntent, PREFS_ACTIVITY);
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
 
 }
