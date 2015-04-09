@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
 
     private String bestProvider;
     private LocationManager locationManager;
-    private LocationListener locationListener = new LocationListener(this);
+    //private LocationListener locationListener;
     private Location mLastLocation;
 
     private String serviceString = this.LOCATION_SERVICE;
@@ -61,23 +61,24 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
     }
 
     private void connect() {
-
+        Log.d("GEO", "Connecting...");
 
     }
 
 
-
+    /*
     private void listenLocationChanges() {
         int t = 5000; // miliseconds
         int distance = 5; // metter
 
+        locationListener = new LocationListener(this)
 
         locationManager.requestLocationUpdates(bestProvider, t, distance, locationListener);
         //locationManager.requestLocationUpdates(serviceString, 0, 0, locationListener);
 
     }
 
-    /*
+
       private void getLocationProvider() {
         locationManager = (LocationManager) getSystemService(serviceString);
 
@@ -129,12 +130,7 @@ public class MainActivity extends ActionBarActivity implements ConnectionCallbac
         }
     }
 
-    protected void startLocationUpdates() {
-        LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, this);
-    }
-
-    @Override
+     @Override
     public void onConnectionSuspended(int i) {
 
     }

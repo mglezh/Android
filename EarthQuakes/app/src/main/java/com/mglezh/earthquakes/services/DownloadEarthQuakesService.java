@@ -105,6 +105,7 @@ public class DownloadEarthQuakesService extends Service {
             earthQuake.setCoords(coords);
 
             Log.d(TAG, earthQuake.toString());
+            Log.d(TAG, coords.toString());
 
             earthQuakeDB.putEarthQuake(earthQuake);
 

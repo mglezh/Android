@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.mglezh.earthquakes.activities.DetailActivity;
 import com.mglezh.earthquakes.R;
 
+import com.mglezh.earthquakes.activities.MapsActivity;
 import com.mglezh.earthquakes.adapters.EarthQuakeAdapter;
 import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.model.EarthQuake;
@@ -55,7 +56,7 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
         super.onListItemClick(l, v, position, id);
         EarthQuake earthQuake = EarthQuakes.get(position);
 
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        Intent intent = new Intent(getActivity(), /*MapsActivity.class*/DetailActivity.class);
         intent.putExtra(EarthQuakes_KEY, earthQuake.get_id());
         startActivity(intent);
    }

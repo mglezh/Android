@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.mglezh.earthquakes.model.Coordinate;
 import com.mglezh.earthquakes.model.EarthQuake;
 
 import java.sql.SQLDataException;
@@ -157,14 +158,17 @@ public class EarthQuakesDB {
         for (int i = 0; i < result_columns.length; i++) {
             indexes.put(result_columns[i], cursor.getColumnIndex(result_columns[i]));
         }
+
         while (cursor.moveToNext())	{
+            Coordinate coords = new Coordinate(cursor.getFloat(indexes.get(lat_KEY)),cursor.getFloat(indexes.get(long_KEY)),0);
             // Si no creo un terremoto nuevo cada vez al agregarlos en la lista todos apuntarían al mismo elemento
             // terremoto porque al adicionar un elemento a una lista lo que se agrega es su dirección
             EarthQuake earthquake = new EarthQuake();
             earthquake.set_id(cursor.getString(indexes.get(id_KEY)));
             earthquake.setMagnitude(cursor.getDouble(indexes.get(magnitude_KEY)));
             earthquake.setPlace(cursor.getString(indexes.get(place_KEY)));
-            //earthquake.setCoords();
+
+            earthquake.setCoords(coords);
             earthquake.setUrl(cursor.getString(indexes.get(url_KEY)));
             earthquake.setTime(cursor.getLong(indexes.get(time_KEY)));
 

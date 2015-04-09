@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.mglezh.earthquakes.R;
 import com.mglezh.earthquakes.manager.Alarm_Manager;
 import com.mglezh.earthquakes.services.DownloadEarthQuakesService;
@@ -22,6 +24,8 @@ public class MainActivity extends ActionBarActivity {
 
     static final int PREFS_ACTIVITY = 1;
     private static final String PREFS_EARTHQUAKES = "preferences_earth_quakes";
+
+    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
