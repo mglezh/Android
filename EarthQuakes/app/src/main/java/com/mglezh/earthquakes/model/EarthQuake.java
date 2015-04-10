@@ -51,6 +51,10 @@ public class EarthQuake {
         return magnitude;
     }
 
+    public String getMagnitudeFormated(){
+        return Double.toString(getMagnitude());
+    }
+
     public void setMagnitude(double magnitude) {
         this.magnitude = magnitude;
     }

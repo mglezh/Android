@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mglezh.earthquakes.R;
 import com.mglezh.earthquakes.database.EarthQuakesDB;
+import com.mglezh.earthquakes.fragments.EarthQuakeMapFragment;
 import com.mglezh.earthquakes.model.EarthQuake;
 
 
@@ -27,6 +28,8 @@ public class DetailActivity extends ActionBarActivity {
     private EarthQuakesDB earthQuakeDB;
     private EarthQuake earthQuake;
 
+    private EarthQuakeMapFragment mapFragment;
+
     private final String EarthQuakes_KEY = "EarthQuakes_KEY";
 
     static final int PREFS_ACTIVITY = 1;
@@ -37,6 +40,8 @@ public class DetailActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake_detail);
+
+        mapFragment = (EarthQuakeMapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
 
         this.earthQuakeDB = new EarthQuakesDB(this);
 
@@ -65,7 +70,6 @@ public class DetailActivity extends ActionBarActivity {
         setUpMapIfNeeded();
     }
 
-
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -79,7 +83,11 @@ public class DetailActivity extends ActionBarActivity {
         }
     }
 
+
+
+
     private void setUpMap() {
+        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())));
         mMap.addMarker(new MarkerOptions().position(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())).title(Double.toString(earthQuake.getMagnitude())));
     }
