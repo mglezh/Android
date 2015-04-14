@@ -1,11 +1,17 @@
 package com.mglezh.earthquakes.services;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.mglezh.earthquakes.R;
+import com.mglezh.earthquakes.activities.MainActivity;
 import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.model.Coordinate;
 import com.mglezh.earthquakes.model.EarthQuake;
@@ -27,6 +33,7 @@ public class DownloadEarthQuakesService extends Service {
     private EarthQuakesDB earthQuakeDB;
     private JSONObject json;
     private String TAG = "UPDATE_EarthQuake";
+    private int NOTIFICATION_QUAKE = 1;
 
     @Override
     public void onCreate() {
@@ -78,7 +85,11 @@ public class DownloadEarthQuakesService extends Service {
                 for (int i = earthquakes.length()-1; i >= 0; i--) {
                     processEarthQuakeTask(earthquakes.getJSONObject(i));
                 }
-            }
+
+                if (count > 0) {
+                    showNotification(count);
+                }
+             }
         } catch	(MalformedURLException e)	{
             e.printStackTrace();
         } catch	(IOException e)	{
@@ -87,6 +98,34 @@ public class DownloadEarthQuakesService extends Service {
             e.printStackTrace();
         }
         return count;
+    }
+
+    private void showNotification(int newQuakes) {
+
+        Intent intentToFire = new Intent(this, MainActivity.class);
+        PendingIntent activityIntent = PendingIntent.getActivity(this,0, intentToFire, 0);
+
+        Notification.Builder builder = new Notification.Builder(this);
+
+        builder.setSmallIcon(R.drawable.ic_launcher)
+                //.setTicker(Integer.toString(newQuakes) + " new earthquakes")
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(Integer.toString(newQuakes) + " new earthquakes")
+                .setWhen(System.currentTimeMillis())
+                .setDefaults(Notification.DEFAULT_SOUND |
+                        Notification.DEFAULT_VIBRATE)
+                .setSound(
+                        RingtoneManager.getDefaultUri(
+                                RingtoneManager.TYPE_NOTIFICATION))
+                .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                .setContentIntent(activityIntent);
+
+        Notification notification =	builder.getNotification();
+
+        String	svc	= this.NOTIFICATION_SERVICE;
+        NotificationManager	notificationManager
+                =	(NotificationManager)getSystemService(svc);
+        notificationManager.notify(NOTIFICATION_QUAKE, notification);
     }
 
     private void processEarthQuakeTask(JSONObject jsonObject){
