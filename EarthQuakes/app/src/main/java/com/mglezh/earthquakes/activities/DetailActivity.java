@@ -1,25 +1,25 @@
 package com.mglezh.earthquakes.activities;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.mglezh.earthquakes.R;
 import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.fragments.EarthQuakeMapFragment;
+import com.mglezh.earthquakes.fragments.EarthQuakesMapFragment;
 import com.mglezh.earthquakes.model.EarthQuake;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class DetailActivity extends ActionBarActivity {
+
+public class DetailActivity extends Activity {
 
     private TextView lblMagnitude;
     private TextView lblPlace;
@@ -41,8 +41,6 @@ public class DetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_earthquake_detail);
 
-        mapFragment = (EarthQuakeMapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
-
         this.earthQuakeDB = new EarthQuakesDB(this);
 
         lblMagnitude = (TextView) findViewById(R.id.textMagnitude);
@@ -54,42 +52,23 @@ public class DetailActivity extends ActionBarActivity {
 
         earthQuake = earthQuakeDB.getEarthQuake(id);
 
+        mapFragment = new EarthQuakeMapFragment();
+        mapFragment.setEarthQuakeId(id);
+
         lblMagnitude.setText("Magnitude : " + Double.toString(earthQuake.getMagnitude()));
         lblPlace.setText(earthQuake.getPlace());
         lblTime.setText(earthQuake.getTime().toString());
 
-        setUpMapIfNeeded();
+        // Cambiar el fragmento
+        FragmentManager FM = getFragmentManager();
+        FragmentTransaction FT = FM.beginTransaction();
+
+        FT.add(R.id.earthQuakeMapFragment, mapFragment);
+        FT.commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        lblMagnitude.setText("Magnitude : " + Double.toString(earthQuake.getMagnitude()));
-        lblPlace.setText(earthQuake.getPlace());
-        lblTime.setText(earthQuake.getTime().toString());
-        setUpMapIfNeeded();
     }
-
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
-        }
-    }
-
-
-
-
-    private void setUpMap() {
-        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat())).title(Double.toString(earthQuake.getMagnitude())));
-    }
-
 }

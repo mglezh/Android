@@ -5,20 +5,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mglezh.earthquakes.R;
+import com.mglezh.earthquakes.fragments.abstracts.AbstractMapFragment;
 import com.mglezh.earthquakes.model.EarthQuake;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,51 +29,36 @@ import java.util.List;
  * Use the {@link EarthQuakeMapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EarthQuakeMapFragment extends MapFragment implements GoogleMap.OnMapLoadedCallback {
-
-    private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private List<EarthQuake> earthQuakes;
-
+public class EarthQuakeMapFragment extends AbstractMapFragment {
+    private String id;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
-
-        mMap = getMap();
-        mMap.setOnMapLoadedCallback(this);
-
         return layout;
     }
 
-    public void setEarthQuakes(List<EarthQuake> earthQuakes){
-        this.earthQuakes = earthQuakes;
-
+    public void setEarthQuakeId(String id){
+        this.id = id;
     }
 
     @Override
-    public void onMapLoaded() {
+    protected void getData() {
+        earthQuakes = earthQuakeDB.getById(id);
+    }
+
+    @Override
+    protected void showMap() {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+        getMap().clear();
 
-        for (EarthQuake earthQuake: earthQuakes) {
+        EarthQuake earthQuake = earthQuakes.get(0);
+        MarkerOptions marker = createMarker(earthQuake);
+        getMap().addMarker(marker);
 
-
-            LatLng point = new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat());
-
-            MarkerOptions marker = new MarkerOptions()
-                    .position(point)
-                    .title(earthQuake.getMagnitudeFormated().concat(" ").concat(earthQuake.getPlace()))
-                    .snippet(earthQuake.getCoords().toString());
-            mMap.addMarker(marker);
-            builder.include(marker.getPosition());
-
-        }
-
-        LatLngBounds bounds = builder.build();
-
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
-
-        mMap.moveCamera(cu);
+        CameraUpdate cu = CameraUpdateFactory.newLatLng(new LatLng(earthQuake.getCoords().getLng(), earthQuake.getCoords().getLat()));
+        getMap().animateCamera(cu);
     }
 }

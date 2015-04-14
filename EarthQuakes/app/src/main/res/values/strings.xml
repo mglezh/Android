@@ -28,5 +28,13 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="earthquakes_view">earthquakes_view</string>
+
+    <string name="VIEW_LIST">View_list</string>
+    <string name="view_list">View</string>
+    <string name="view_list_sumary">Select view</string>
+    <string name="tab_list">List</string>
+    <string name="tab_map">Map</string>
+    <string name="action_refresh">action_refresh</string>
 
 </resources>

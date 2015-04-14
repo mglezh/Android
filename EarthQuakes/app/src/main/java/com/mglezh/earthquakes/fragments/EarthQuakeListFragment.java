@@ -1,11 +1,14 @@
 package com.mglezh.earthquakes.fragments;
 
+import android.app.ListFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.app.ListFragment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -13,15 +16,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mglezh.earthquakes.activities.SettingActivity;
+import com.mglezh.earthquakes.database.EarthQuakesDB;
+import com.mglezh.earthquakes.fragments.abstracts.AbstractMapFragment;
 import com.mglezh.earthquakes.activities.DetailActivity;
 import com.mglezh.earthquakes.R;
 
 import com.mglezh.earthquakes.adapters.EarthQuakeAdapter;
-import com.mglezh.earthquakes.database.EarthQuakesDB;
 import com.mglezh.earthquakes.model.EarthQuake;
 import com.mglezh.earthquakes.services.DownloadEarthQuakesService;
 import com.mglezh.earthquakes.tasks.DownloadEarthquakesTask;
@@ -29,7 +34,6 @@ import com.mglezh.earthquakes.tasks.DownloadEarthquakesTask;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -42,27 +46,35 @@ import java.util.List;
 public class EarthQuakeListFragment extends ListFragment implements DownloadEarthquakesTask.AddEarthQuakeInterface {
                                                         //Al heredar esta interface tengo que implementar sus métodos
     private JSONObject json;
-    private ArrayList<EarthQuake> EarthQuakes;
+    private ArrayList<EarthQuake> earthQuakes;
     private EarthQuakeAdapter aa;
 
     private EarthQuakesDB earthQuakeDB;
 
+    private SharedPreferences prefs;
+
     private final String EarthQuakes_KEY = "EarthQuakes_KEY";
+
+    private MapFragment earthQuakeMapFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         this.earthQuakeDB = new EarthQuakesDB(getActivity());
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        setHasOptionsMenu(true);
     }
 
-    // Es un procedimiento de ListFragment que se activa al seleccinar un elemento de la listaS
+    // Es un procedimiento de ListFragment que se activa al seleccionar un elemento de la lista
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        EarthQuake earthQuake = EarthQuakes.get(position);
+        EarthQuake earthQuake = earthQuakes.get(position);
 
-        Intent intent = new Intent(getActivity(), /*MapsActivity.class*/DetailActivity.class);
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
         intent.putExtra(EarthQuakes_KEY, earthQuake.get_id());
         startActivity(intent);
    }
@@ -71,9 +83,9 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
-        EarthQuakes = new ArrayList<>();
+        earthQuakes = new ArrayList<>();
 
-        aa = new EarthQuakeAdapter(getActivity(), R.layout.activity_detail, EarthQuakes);
+        aa = new EarthQuakeAdapter(getActivity(), R.layout.activity_earthquakes_list, earthQuakes);
         setListAdapter(aa);
 
         return layout;
@@ -94,9 +106,35 @@ public class EarthQuakeListFragment extends ListFragment implements DownloadEart
 
         double minMagnitude = Double.parseDouble(prefs.getString(getString(R.string.MAGNITUDE_LIST), "0"));
 
-        EarthQuakes.clear();
-        EarthQuakes.addAll( earthQuakeDB.getAllByMagnitude(minMagnitude));
+        earthQuakes.clear();
+        earthQuakes.addAll(earthQuakeDB.getAllByMagnitude(minMagnitude));
         aa.notifyDataSetChanged();
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.menu_refresh, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_refresh:
+                Intent download = new Intent(getActivity(), DownloadEarthQuakesService.class);
+                getActivity().startService(download);
+
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
