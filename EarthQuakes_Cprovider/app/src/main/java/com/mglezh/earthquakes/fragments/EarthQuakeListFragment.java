@@ -14,15 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.mglezh.earthquakes.activities.SettingActivity;
-import com.mglezh.earthquakes.database.EarthQuakesDB;
-import com.mglezh.earthquakes.fragments.abstracts.AbstractMapFragment;
+import com.mglezh.earthquakes.providers.EarthQuakesDB;
 import com.mglezh.earthquakes.activities.DetailActivity;
 import com.mglezh.earthquakes.R;
 

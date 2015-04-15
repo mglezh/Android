@@ -1,22 +1,14 @@
 package com.mglezh.earthquakes.activities;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.mglezh.earthquakes.R;
-import com.mglezh.earthquakes.database.EarthQuakesDB;
-import com.mglezh.earthquakes.fragments.EarthQuakeMapFragment;
-import com.mglezh.earthquakes.fragments.EarthQuakesMapFragment;
+import com.mglezh.earthquakes.providers.EarthQuakesDB;
 import com.mglezh.earthquakes.model.EarthQuake;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class DetailActivity extends Activity {
