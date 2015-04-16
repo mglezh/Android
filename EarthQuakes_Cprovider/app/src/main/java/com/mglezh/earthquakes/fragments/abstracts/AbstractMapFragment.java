@@ -31,16 +31,11 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
 
         this.earthQuakeDB = new EarthQuakesDB(getActivity());
         earthQuakes = new ArrayList<>();
-        //mMap = getMap();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
-
-        mMap = getMap();
-        mMap.setOnMapLoadedCallback(this);
-
         return layout;
     }
 
@@ -55,7 +50,6 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
         if (mMap == null) {
             mMap = getMap();
         }
-
     }
     public MarkerOptions createMarker(EarthQuake earthQuake)
     {
@@ -65,7 +59,6 @@ public abstract class AbstractMapFragment extends MapFragment implements GoogleM
                 .position(point)
                 .title(earthQuake.getMagnitudeFormated().concat(" ").concat(earthQuake.getPlace()))
                 .snippet(earthQuake.getCoords().toString());
-        mMap.addMarker(marker);
 
         return marker;
     }
